@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$MIND Hub</title>
+<meta name="description" content="Launch progress, allocation calculator and official links for $MIND. Not affiliated with AGENCY, Pump.fun or AlfaClub.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--cream:#F0E2CD;--cream-d:#BAAC98;--mint:#96EBCD;--mint-d:#285F4F;--line:#3a352e}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--cream);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:max(24px,env(safe-area-inset-top)) 20px max(40px,env(safe-area-inset-bottom))}
+main{max-width:40rem;margin:0 auto}
+h1,h2{font-family:"VT323",ui-monospace,Menlo,Consolas,monospace;font-weight:400;line-height:1.05;margin:0}
+h1{font-size:clamp(3.2rem,14vw,5rem);color:var(--cream);margin-top:28px;letter-spacing:.01em}
+h2{font-size:2rem;color:var(--mint);margin-bottom:10px}
+p{margin:0 0 14px}
+.lede{max-width:34rem;color:var(--cream-d);margin-top:10px}
+section{margin-top:52px}
+
+/* monitor */
+.rig{max-width:420px}
+.monitor{background:var(--cream);border-radius:10px;padding:14px 14px 10px}
+.screen{position:relative;background:#0b0b0b;border-radius:6px;padding:18px 16px 16px;overflow:hidden}
+#brain{display:block;width:150px;height:auto;margin:2px auto 14px;image-rendering:pixelated}
+.meter{display:flex;justify-content:space-between;align-items:baseline;font-family:"VT323",ui-monospace,monospace;font-size:1.45rem;color:var(--mint)}
+.meter b{font-weight:400;color:var(--cream)}
+.bar{height:16px;border:3px solid var(--cream);margin-top:6px;padding:2px}
+.bar i{display:block;height:100%;width:0;background:var(--mint);transition:width .9s steps(12)}
+.scan{position:absolute;left:0;right:0;height:3px;background:rgba(150,235,205,.18);top:0;animation:scan 5s linear infinite}
+@keyframes scan{from{top:0}to{top:100%}}
+.bezel{display:flex;gap:6px;justify-content:flex-end;padding:10px 4px 0}
+.bezel i{width:12px;height:12px;background:#4a3d33}
+.bezel i:first-child{background:var(--mint-d)}
+.stand{width:34%;height:14px;background:var(--cream-d);margin:0 auto}
+.base{width:56%;height:8px;background:var(--cream-d);opacity:.85;margin:0 auto;border-radius:0 0 3px 3px}
+
+/* calculator */
+label{display:block;margin-bottom:6px;color:var(--cream-d)}
+input{font:inherit;font-size:1.25rem;width:8rem;padding:10px 12px;background:#0b0b0b;color:var(--cream);border:2px solid var(--cream-d);border-radius:6px}
+input:focus-visible,a:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+#result{margin:16px 0 18px;min-height:3.2em;font-size:1.1rem}
+#result strong{font-family:"VT323",ui-monospace,monospace;font-size:2.1rem;font-weight:400;color:var(--mint);display:block;line-height:1.1}
+.fine{font-size:.9rem;color:var(--cream-d)}
+.tiers{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:.98rem}
+.tiers th,.tiers td{padding:9px 6px;text-align:left;border-bottom:1px solid var(--line)}
+.tiers th{font-weight:600;color:var(--cream-d)}
+.tiers td:last-child,.tiers th:last-child{text-align:right}
+.tiers tr.on td{background:var(--mint);color:#000}
+.tablewrap{overflow-x:auto;margin-top:6px}
+
+/* links */
+.links{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.links a{display:block;padding:16px 18px;border:2px solid var(--cream-d);border-radius:8px;color:var(--cream);text-decoration:none}
+.links a:hover{border-color:var(--mint)}
+.links strong{display:block;font-family:"VT323",ui-monospace,monospace;font-weight:400;font-size:1.7rem;color:var(--mint);line-height:1.1}
+.links span{color:var(--cream-d);font-size:.97rem}
+footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);color:var(--cream-d);font-size:.9rem}
+@media (prefers-reduced-motion:reduce){.scan{animation:none;display:none}.bar i{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="rig">
+  <div class="rig">
+  <div class="monitor" role="img" aria-label="Pixel monitor showing launch progress">
+    <div class="screen">
+      <svg id="brain" viewBox="0 0 15 12" shape-rendering="crispEdges" aria-hidden="true"></svg>
+      <div class="meter"><span>Key holders</span><b id="count">0/100</b></div>
+      <div class="bar"><i id="fill"></i></div>
+      <div class="scan"></div>
+    </div>
+    <div class="bezel"><i></i><i></i><i></i></div>
+  </div>
+  <div class="stand"></div><div class="base"></div>
+  </div>
+  </div>
+  <h1>$MIND Hub</h1>
+  <p class="lede">$MIND launches automatically once 100 key holders are in. Follow the progress here and check where your rank would land.</p>
+</header>
+
+<section aria-labelledby="calc">
+  <h2 id="calc">Where would your rank land?</h2>
+  <p>The top 100 key holders share 20% of supply, ranked by keys held. Most keys is rank 1.</p>
+  <label for="rank">Your rank (1 to 100)</label>
+  <input id="rank" type="number" inputmode="numeric" min="1" max="100" step="1" placeholder="12">
+  <div id="result" aria-live="polite">Enter a rank to see the amount.</div>
+  <div class="tablewrap">
+    <table class="tiers">
+      <thead><tr><th>Rank</th><th>$MIND per holder</th></tr></thead>
+      <tbody id="tiers"></tbody>
+    </table>
+  </div>
+  <p class="fine" style="margin-top:12px">Estimate only. The snapshot is taken when the token launches, and nothing is guaranteed.</p>
+</section>
+
+<section aria-labelledby="links">
+  <h2 id="links">Official links</h2>
+  <ul class="links">
+    <li><a href="https://x.com/mind_agency_sol" rel="noopener"><strong>Follow on X</strong><span>Updates, progress and answers in detail.</span></a></li>
+    <li><a href="https://github.com/mind-agency/whitepaper" rel="noopener"><strong>Read the whitepaper</strong><span>How $MIND works, who holds what, and what can go wrong.</span></a></li>
+    <li><a href="https://alfaclub.app/rooms/7f415ee6-5399-4293-a0eb-ab7687eff429/info" rel="noopener"><strong>Join the AlfaClub room</strong><span>Key holders share the community allocation. Keys are paid.</span></a></li>
+  </ul>
+</section>
+
+<footer>
+  <p>$MIND is an independent project. Not affiliated with AGENCY, Pump.fun or AlfaClub. DYOR. Nothing here is financial advice.</p>
+  <p>The contract address will be posted in the room first. Trust only the address shared there and on the official X account.</p>
+</footer>
+</main>
+
+<script>
+// Update this number as key holders join.
+var HOLDERS = 24, GOAL = 100;
+
+var TIERS = [[1,1,12000000],[2,3,8000000],[4,6,6000000],[7,10,4500000],[11,15,3500000],
+             [16,25,2500000],[26,40,1900000],[41,60,1500000],[61,80,1000000],[81,100,750000]];
+var SUPPLY = 1000000000;
+function fmt(n){return n.toLocaleString("en-US")}
+
+// pixel brain
+var BRAIN = ["....#######....","..###########..",".#############.","###############","###############","###############",
+             "###############",".#############.","..###########..","...####.####...","....###.###....","......#.#......"];
+var FOLDS = {"1,7":1,"2,7":1,"3,7":1,"4,7":1,"5,7":1,"6,7":1,"7,7":1,"8,7":1,"2,3":1,"3,3":1,"3,4":1,"5,2":1,"5,3":1,"5,4":1,"6,4":1,"7,5":1,"1,5":1,"4,1":1,
+             "2,11":1,"3,11":1,"3,10":1,"5,12":1,"5,11":1,"5,10":1,"6,10":1,"7,9":1,"1,9":1,"4,13":1};
+var svg = document.getElementById("brain"), NS = "http://www.w3.org/2000/svg";
+BRAIN.forEach(function(row, r){
+  for (var c = 0; c < row.length; c++){
+    if (row[c] !== "#") continue;
+    var e = document.createElementNS(NS, "rect");
+    e.setAttribute("x", c); e.setAttribute("y", r); e.setAttribute("width", 1); e.setAttribute("height", 1);
+    e.setAttribute("fill", FOLDS[r + "," + c] ? "#285F4F" : "#96EBCD");
+    svg.appendChild(e);
+  }
+});
+
+// progress
+document.getElementById("count").textContent = HOLDERS + "/" + GOAL;
+requestAnimationFrame(function(){ document.getElementById("fill").style.width = Math.min(100, HOLDERS / GOAL * 100) + "%"; });
+
+// tiers table
+var body = document.getElementById("tiers");
+TIERS.forEach(function(t){
+  var tr = document.createElement("tr");
+  tr.innerHTML = "<td>" + (t[0] === t[1] ? t[0] : t[0] + " to " + t[1]) + "</td><td>" + fmt(t[2]) + "</td>";
+  body.appendChild(tr);
+});
+
+// calculator
+var input = document.getElementById("rank"), out = document.getElementById("result");
+function update(){
+  var rows = body.children, v = input.value.trim(), n = Number(v);
+  for (var i = 0; i < rows.length; i++) rows[i].classList.remove("on");
+  if (v === ""){ out.textContent = "Enter a rank to see the amount."; return; }
+  if (!Number.isInteger(n) || n < 1){ out.textContent = "Enter a whole number from 1 to 100."; return; }
+  if (n > 100){ out.textContent = "Only the top 100 key holders receive an allocation."; return; }
+  for (var j = 0; j < TIERS.length; j++){
+    if (n >= TIERS[j][0] && n <= TIERS[j][1]){
+      rows[j].classList.add("on");
+      var pct = (TIERS[j][2] / SUPPLY * 100).toFixed(3).replace(/0+$/, "").replace(/\.$/, "");
+      out.innerHTML = "Rank " + n + " would receive<strong>" + fmt(TIERS[j][2]) + " $MIND</strong>" + pct + "% of total supply";
+      break;
+    }
+  }
+}
+input.addEventListener("input", update);
+</script>
+</body>
+</html>
